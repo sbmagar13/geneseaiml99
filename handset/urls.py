@@ -3,7 +3,7 @@ from handset import views
 
 
 urlpatterns = [
-    path('home/', views.index, name=''),
+    path('', views.index, name=''),
 
     path('handset/', views.handset_view, name='handset_insert'),
     path('hsupdate/<int:hid>/', views.handset_view, name='handset_update'),

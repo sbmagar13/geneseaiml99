@@ -8,7 +8,7 @@ from django.db.models import Q
 
 def index(request):
     username = request.user
-    return render(request, 'operatorhandset_status.html', {'username': username})
+    return render(request, 'index.html', {'username': username})
 
 
 def handset_list(request):
