@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<title>Operator Handset Device Status</title>
+<div class="row">
+    <h4 class="col-md-offset-4">Operator Handset Device Status</h4>
+    <div class="col-lg-7">
+        <form name="myform" action="{% url 'handset_search' %}" method="get">
+            <div class="form-group">
+                <div class="col-sm-">
+                    <input name="srh" type="text" placeholder="Search...">
+                    <label class="col-sm-1">
+                        <button type="submit" class="btn btn-danger">Search</button>
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr class="my-1">
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Phone ID</td>
+            <td>Password</td>
+            <td>MAC Address</td>
+            <td>Manager Name</td>
+            <td>Manager Phone Number</td>
+            <td>Department</td>
+            <td>Final Approver</td>
+            <td>
+                <a href="{% url 'handset_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for handset in match %}
+            <tr>
+                <td>{{ handset.PhoneNo }}</td>
+                <td>{{ handset.Password }}</td>
+                <td>{{ handset.MacAddress }}</td>
+                <td>{{ handset.ManagerName }}</td>
+                <td>{{ handset.ManagerPhoneNo }}</td>
+                <td>{{ handset.Department }}</td>
+                <td>{{ handset.FinalApprover }}</td>
+                <td>
+                    <a href="{% url 'handset_update' handset.id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg">Edit</i>
+                    </a>
+                    <button href="{% url 'handset_delete' handset.id %}" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#op{{ handset.id }}" data-whatever="@fat">Delete</button>
+                    <div class="modal fade" id="op{{ handset.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Please Enter Approver Key!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="{% url 'handset_delete' handset.id %}" method="post" autocomplete="off">
+                                {% csrf_token %}
+                                {{ form2.as_p }}
+                                <div class = "col-md-4">
+                                    <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>Submit</button>
+                                </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="col-md-2">
+    <a href="{% url 'handset_insert' %}" class="btn btn-secondary btn-block btn-lg">
+        <i class="fas fa-stream"></i>Close
+    </a>
+</div>
+
+{% endblock content %}
