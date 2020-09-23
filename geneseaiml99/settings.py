@@ -24,9 +24,9 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'handset/templates')
 SECRET_KEY = '=fka-+rjqz#hly48%0b0$e-@-el!_2o^xvvox$ow9x2qr&o(6n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
